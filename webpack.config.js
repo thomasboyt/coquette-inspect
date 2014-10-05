@@ -1,11 +1,17 @@
+var webpack = require('webpack');
+
 module.exports = {
   entry: {
     ui: './src/ui/index.js',
-    agent: './src/agent/index.js'
+    agent: './src/agent/index.js',
+    vendor: [
+      'react',
+      'fluxxor'
+    ]
   },
 
   output: {
-    path: 'chrome-extension/',
+    path: 'chrome-extension/build/',
     filename: '[name].bundle.js'
   },
 
@@ -14,6 +20,10 @@ module.exports = {
     // prevent duplicate copies of modules
     root: require('path').resolve('./node_modules')
   },
+
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js')
+  ],
 
   module: {
     loaders: [

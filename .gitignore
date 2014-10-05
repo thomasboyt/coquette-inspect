@@ -1,2 +1,2 @@
 node_modules/
-chrome-extension/*.bundle.js
+chrome-extension/build/
