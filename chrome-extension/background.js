@@ -2,7 +2,7 @@ var connections = {};
 
 // Receive message from content script and relay to the devTools page for the
 // current tab
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function(request, sender) {
   console.log('incoming message from injected script', request);
 
   // Messages from content scripts should have sender.tab set
@@ -26,7 +26,7 @@ chrome.runtime.onConnect.addListener(function(port) {
     console.log('incoming message from dev tools page');
 
     // Register initial connection
-    if (request.name == 'init') {
+    if (request.name === 'init') {
       connections[request.tabId] = port;
 
       port.onDisconnect.addListener(function() {

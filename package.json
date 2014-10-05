@@ -9,9 +9,11 @@
   "author": "Thomas Boyt <me@thomasboyt.com>",
   "license": "MIT",
   "devDependencies": {
-    "webpack": "~1.4.4"
+    "webpack": "~1.4.4",
+    "jsx-loader": "~0.11.2"
   },
   "dependencies": {
-    "react": "~0.11.2"
+    "react": "~0.11.2",
+    "fluxxor": "~1.4.1"
   }
 }

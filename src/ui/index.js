@@ -1,15 +1,23 @@
-// thx https://github.com/emberjs/ember-inspector/blob/master/app/adapters/chrome.js
+/** @jsx React.DOM */
 
-var injectDebugger = function() {
-  var xhr = new XMLHttpRequest();
-  // yes, this is a synchronous HTTP request. welcome to the magic world of extension development,
-  // where everything is just SLIGHTLY off from regular ol' javascripting
-  xhr.open('GET', chrome.extension.getURL('/debug.bundle.js'), false);
-  xhr.send();
+var React = require('react');
+var Main = require('./components/Main');
 
-  var script = xhr.responseText;
-  chrome.devtools.inspectedWindow.eval(script);
+var injectDebugger = require('./injectDebugger');
+
+var Flux = require('fluxxor').Flux;
+var EntityActions = require('./actions/EntityActions');
+var EntityStore = require('./stores/EntityStore');
+
+var stores = {
+  EntityStore: new EntityStore()
 };
+
+var actions = {
+  entities: EntityActions
+};
+
+var flux = new Flux(stores, actions);
 
 // Create a connection to the background page
 var backgroundPageConnection = chrome.runtime.connect({
@@ -22,7 +30,17 @@ backgroundPageConnection.postMessage({
 });
 
 backgroundPageConnection.onMessage.addListener(function(msg) {
-  alert(msg);
+  if (msg.name === 'connected') {
+    // document.write('connected');
+  } else if (msg.name === 'locatedCoquette') {
+    flux.actions.entities.loadEntities(msg.data.entities);
+  } else {
+    // console.log('unknown event type', msg.name);
+  }
 });
 
 injectDebugger();
+
+window.addEventListener('load', function() {
+  React.renderComponent(<Main flux={flux}/>, document.getElementById('container'));
+});
