@@ -1,0 +1,17 @@
+{
+  "name": "coquette-inspect",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Thomas Boyt <me@thomasboyt.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "~1.4.4"
+  },
+  "dependencies": {
+    "react": "~0.11.2"
+  }
+}
