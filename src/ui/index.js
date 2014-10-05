@@ -21,9 +21,8 @@ backgroundPageConnection.postMessage({
   tabId: chrome.devtools.inspectedWindow.tabId
 });
 
-// backgroundPageConnection.onMessage.addListener(function(msg) {
-//   alert(msg);
-// });
+backgroundPageConnection.onMessage.addListener(function(msg) {
+  alert(msg);
+});
 
 injectDebugger();
-
