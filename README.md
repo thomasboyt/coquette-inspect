@@ -1,6 +1,6 @@
 # coquette-inspect
 
-Chrome dev tools extension for inspecting [Coquette.js](http://coquette.maryrosecook.com/) games
+A Chrome DevTools extension for inspecting [Coquette.js](http://coquette.maryrosecook.com/) games.
 
 ## Features
 

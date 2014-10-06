@@ -1,27 +1,48 @@
 console.log('connected');
 
-window.postMessage({target: 'page', name: 'connected', data: {}}, '*');
+var sendMessage = function(name, data) {
+  window.postMessage({
+    source: 'coq-debug',
+    name: name,
+    data: data || {}
+  }, '*');
+};
 
-if (window.__coquette__) {
-  console.log('located coquette');
+var reportEntities = function(c) {
+  var entities = c.entities.all().map(function(entity) {
+    return entity.displayName || entity.constructor.name || '<unknown entity>';
+  });
 
-  window.postMessage({target: 'page', name: 'locatedCoquette', data: {}}, '*');
+  sendMessage('entities', {entities: entities});
+};
 
-  var c = window.__coquette__;
-
+var initializeDebugLoop = function(c) {
   var debugLoop = function() {
-    // Report entities
-    var entities = c.entities.all().map(function(entity) {
-      return entity.displayName || entity.constructor.name || '<unknown entity>';
-    });
+    reportEntities(c);
 
-    window.postMessage({target: 'page', name: 'entities', data: {entities: entities}}, '*');
-
-    // TODO: setTimeout() seems like a non-optimal way to do this :(
+    // Ensure that this isn't re-enqueued on the same frame, or the runner gets stuck in an endless
+    // loop.
+    // TODO: setTimeout() seems like a non-optimal way to do this, could end up missing frames
+    // or hurting perf? :C
     setTimeout(function() {
       c.runner.add(undefined, debugLoop);
     });
   };
 
   c.runner.add(undefined, debugLoop);
+};
+
+sendMessage('connected');
+
+if (window.__coquette__) {
+  console.log('located coquette');
+
+  sendMessage('locatedCoquette');
+
+  initializeDebugLoop(window.__coquette__);
+
+} else {
+  console.log('did not locate coquette');
+
+  sendMessage('noCoquetteFound');
 }

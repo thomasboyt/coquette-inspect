@@ -7,7 +7,7 @@ window.addEventListener('message', function(event) {
   var message = event.data;
 
   // Only accept messages of correct format (our messages)
-  if (typeof message !== 'object' || message === null || message.target !== 'page') {
+  if (typeof message !== 'object' || message === null || message.source !== 'coq-debug') {
     return;
   }
 
