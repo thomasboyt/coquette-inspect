@@ -17,14 +17,18 @@ var EntityList = React.createClass({
     };
   },
 
-  render: function() {
-    var items = this.state.entities.map(function(entity, idx) {
-      return (
-        <li key={idx}>
-          {entity}
-        </li>
-      );
+  handleOpenEntity: function(idx) {
+    this.getFlux().actions.entities.openEntity({
+      idx: idx
     });
+  },
+
+  render: function() {
+    var items = this.state.entities.map((name, idx) => (
+      <li key={idx}>
+        <a onClick={() => this.handleOpenEntity(idx)}>{name}</a>
+      </li>
+    ));
 
     return (
       <ul>

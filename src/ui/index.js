@@ -32,13 +32,14 @@ backgroundPageConnection.postMessage({
 backgroundPageConnection.onMessage.addListener(function(msg) {
   if (msg.name === 'connected') {
     // document.write('connected');
-  } else if (msg.name === 'locatedCoquette') {
+  } else if (msg.name === 'entities') {
     flux.actions.entities.loadEntities(msg.data.entities);
   } else {
     // console.log('unknown event type', msg.name);
   }
 });
 
+console.log('injecting debugger');
 injectDebugger();
 
 window.addEventListener('load', function() {
