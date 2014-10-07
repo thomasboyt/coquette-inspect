@@ -15,6 +15,6 @@
   "dependencies": {
     "react": "~0.11.2",
     "fluxxor": "~1.4.1",
-    "circular-json": "~0.1.6"
+    "uuid": "~2.0.1"
   }
 }

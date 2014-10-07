@@ -17,16 +17,16 @@ var EntityList = React.createClass({
     };
   },
 
-  handleOpenEntity: function(idx) {
-    this.getFlux().actions.entities.openEntity({
-      idx: idx
-    });
+  handleOpenEntity: function(id) {
+    this.getFlux().actions.entities.subscribeToEntity(id);
   },
 
   render: function() {
-    var items = this.state.entities.map((name, idx) => (
-      <li key={idx}>
-        <a onClick={() => this.handleOpenEntity(idx)}>{name}</a>
+    var items = this.state.entities.map((entity) => (
+      <li key={entity.__inspect_uuid__}>
+        <a onClick={() => this.handleOpenEntity(entity.__inspect_uuid__)}>
+          {entity.name}
+        </a>
       </li>
     ));
 

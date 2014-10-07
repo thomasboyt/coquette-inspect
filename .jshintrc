@@ -7,8 +7,6 @@
   "unused": true,
   "sub": true,
 
-  "maxlen": 100,
-
   "browser": true,
   "node": true,
   "devel": true,
