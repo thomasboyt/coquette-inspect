@@ -4,42 +4,16 @@ var React = require('react');
 var Main = require('./components/Main');
 
 var injectDebugger = require('./injectDebugger');
+var AgentHandler = require('./AgentHandler');
 
 var Flux = require('fluxxor').Flux;
-var EntityActions = require('./actions/EntityActions');
-var EntityStore = require('./stores/EntityStore');
-
-var stores = {
-  EntityStore: new EntityStore()
-};
-
-var actions = {
-  entities: EntityActions
-};
+var actions = require('./actions');
+var stores = require('./stores');
 
 var flux = new Flux(stores, actions);
 
-// Create a connection to the background page
-var backgroundPageConnection = chrome.runtime.connect({
-  name: 'panel'
-});
+var agentHandler = new AgentHandler(flux);
 
-backgroundPageConnection.postMessage({
-  name: 'init',
-  tabId: chrome.devtools.inspectedWindow.tabId
-});
-
-backgroundPageConnection.onMessage.addListener(function(msg) {
-  if (msg.name === 'connected') {
-    // document.write('connected');
-  } else if (msg.name === 'entities') {
-    flux.actions.entities.loadEntities(msg.data.entities);
-  } else {
-    // console.log('unknown event type', msg.name);
-  }
-});
-
-console.log('injecting debugger');
 injectDebugger();
 
 window.addEventListener('load', function() {

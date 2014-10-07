@@ -2,14 +2,14 @@ var Fluxxor = require('fluxxor');
 
 var EntityStore = Fluxxor.createStore({
   actions: {
-    'loadEntities': 'onLoadEntities'
+    'didGetEntities': 'onDidGetEntities'
   },
 
   initialize: function() {
     this.entities = [];
   },
 
-  onLoadEntities: function(entities) {
+  onDidGetEntities: function(entities) {
     this.entities = entities;
     this.emit('change');
   }

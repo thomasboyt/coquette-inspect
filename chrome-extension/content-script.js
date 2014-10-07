@@ -7,9 +7,15 @@ window.addEventListener('message', function(event) {
   var message = event.data;
 
   // Only accept messages of correct format (our messages)
-  if (typeof message !== 'object' || message === null || message.source !== 'coq-debug') {
+  if (typeof message !== 'object' || message === null ||
+      message.source !== 'coquette-inspect-agent') {
     return;
   }
 
   chrome.runtime.sendMessage(message);
+});
+
+chrome.runtime.onMessage.addListener(function(request) {
+  request.source = 'coquette-inspect-devtools';
+  window.postMessage(request, '*');
 });

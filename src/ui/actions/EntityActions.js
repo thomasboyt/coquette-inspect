@@ -1,6 +1,6 @@
 module.exports = {
-  loadEntities: function(entities) {
-    this.dispatch('loadEntities', entities);
+  didGetEntities: function(entities) {
+    this.dispatch('didGetEntities', entities);
   },
 
   openEntity: function(opts) {
