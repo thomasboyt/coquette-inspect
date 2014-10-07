@@ -25,7 +25,7 @@ var EntityList = React.createClass({
     var items = this.state.entities.map((entity) => (
       <li key={entity.__inspect_uuid__}>
         <a onClick={() => this.handleOpenEntity(entity.__inspect_uuid__)}>
-          {entity.name}
+          {entity.displayName || 'unknown entity'}
         </a>
       </li>
     ));

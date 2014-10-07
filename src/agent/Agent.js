@@ -1,4 +1,5 @@
 var sendMessage = require('./util/sendMessage');
+var serializeEntity = require('./util/serializeEntity');
 
 var Agent = function(c) {
   this.c = c;
@@ -43,12 +44,7 @@ Agent.prototype.initDevtoolsMessageListener = function() {
 };
 
 Agent.prototype.reportEntities = function() {
-  var entities = this.c.entities.all().map(function(entity) {
-    return {
-      name: entity.displayName || entity.constructor.name || '<unknown entity>',
-      __inspect_uuid__: entity.__inspect_uuid__
-    };
-  });
+  var entities = this.c.entities.all().map(serializeEntity);
 
   sendMessage('entities', {entities: entities});
 };
