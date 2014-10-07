@@ -8,5 +8,14 @@ module.exports = {
 
   didPauseGame: function() {
     this.dispatch('pausedGame');
-  }
+  },
+
+  unpauseGame: function() {
+    // pause game
+    sendMessage('unpause');
+  },
+
+  didUnpauseGame: function() {
+    this.dispatch('unpausedGame');
+  },
 };

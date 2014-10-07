@@ -31,7 +31,7 @@ var GameState = React.createClass({
 
     return (
       <div>
-        {this.isPaused ? 'Paused' : 'Running'}
+        {this.state.isPaused ? 'Paused' : 'Running'}
 
         <a href="#" onClick={this.handleTogglePause}>Toggle</a>
       </div>

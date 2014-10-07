@@ -61,14 +61,20 @@ Agent.prototype.reportEntities = function() {
 
 Agent.prototype.pauseExecution = function() {
   this.c.ticker.stop();
+  sendMessage('paused');
 };
 
 Agent.prototype.resumeExecution = function() {
   this.c.ticker.start();
+  sendMessage('unpaused');
 };
 
 Agent.prototype.handleMessage = function(message) {
-  console.log('received message', message);
+  if (message.name === 'pause') {
+    this.pauseExecution();
+  } else if (message.name === 'unpause') {
+    this.resumeExecution();
+  }
 };
 
 

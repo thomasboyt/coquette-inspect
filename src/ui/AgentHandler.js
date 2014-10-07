@@ -13,6 +13,8 @@ AgentHandler.prototype.handleMessage = function(msg) {
     this.flux.actions.entities.didGetEntities(msg.data.entities);
   } else if (msg.name === 'paused') {
     this.flux.actions.game.didPauseGame();
+  } else if (msg.name === 'unpaused') {
+    this.flux.actions.game.didUnpauseGame();
   } else {
     // console.log('unknown event type', msg.name);
   }
