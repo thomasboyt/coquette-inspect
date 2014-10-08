@@ -22,23 +22,25 @@ var EntityList = React.createClass({
   },
 
   renderEntityProperties: function(entity) {
-    var items = Object.keys(entity).map((prop) => {
-      var val = entity[prop];
+    var items = Object.keys(entity)
+      .filter((prop) => prop !== 'displayName' && prop !== '__inspect_uuid__')
+      .map((prop) => {
+        var val = entity[prop];
 
-      if (typeof val === 'object' && val !== null) {
+        if (typeof val === 'object' && val !== null) {
+          return (
+            <li key={prop}>
+              <code>{prop}</code>: <code>{this.renderEntityProperties(val)}</code>
+            </li>
+          );
+        }
+
         return (
           <li key={prop}>
-            <code>{prop}</code>: <code>{this.renderEntityProperties(val)}</code>
+            <code>{prop}</code>: <code>{val}</code>
           </li>
         );
-      }
-
-      return (
-        <li key={prop}>
-          <code>{prop}</code>: <code>{val}</code>
-        </li>
-      );
-    });
+      });
 
     return (
       <ul>

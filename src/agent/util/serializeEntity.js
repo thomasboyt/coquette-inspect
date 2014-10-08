@@ -7,7 +7,8 @@ var cloneValue = function(val, seen) {
 
   /* Functions */
   if (typeof val === 'function') {
-    return '[object Function]';
+    return undefined;  // TODO: there's a use case for serializing these into [object Function],
+                       // maybe just do this filtering UI-side
   }
 
   /* Arrays */
