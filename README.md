@@ -30,6 +30,8 @@ If it worked, you should see a "Coquette" tab in your developer tools when you o
 
 There are two modifications you'll need to do to your Coquette apps to make them work.
 
+### Exposing Coquette
+
 The most important one is that you expose the Coquette instance in your game as `window.__coquette__`, e.g.:
 
 ```js
@@ -38,7 +40,12 @@ var Game = function() {
 // ...
 ```
 
-The other change is that, for the *name* of an entity to display correctly, *one* of the following needs to be true:
+Without this, the inspector won't be able to find your Coquette instance.
 
-* The entity's constructor needs to have been declared in the format `function Foo() {...}`, *not* `var Foo = function() {...}`. This is so that [function.name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/name) can work.
-* Otherwise, the entity needs to have the property `displayName` set to a string representation of it (e.g. `this.displayName = 'Person'`).
+### Entity display names
+
+To display your entities with their proper names (i.e. their constructors), one of two of the following need to be true:
+
+If your constructors are defined with the syntax `function Foo() {...}`, the name will be looked up with `entity.constructor.name`. This doesn't work if your function is anonymous, e.g. `var Foo = function() {...}`, because that's just how `function.name` works. See [MDN] (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/name)for more detail on this weird quirk.
+
+Otherwise, you can set the `displayName` property on your entity. You can either set it inside the constructor (e.g. `this.displayName = 'Person'`), or inside the call to `entities.create` (e.g. `c.entities.create(Person, {displayName: 'Player'})`).
