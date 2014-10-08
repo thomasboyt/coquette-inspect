@@ -67,8 +67,13 @@ var dumbObjClone = function(obj, seen) {
   return clone;
 };
 
-var serializeEntity = function(entity) {
-  var clone = dumbObjClone(entity);
+var serializeEntity = function(entity, entities) {
+  var entitiesMap = new WeakMap();
+  entities.forEach((entity) => {
+    entitiesMap.set(entity, null);
+  });
+
+  var clone = dumbObjClone(entity, entitiesMap);
 
   clone.displayName = entity.displayName || entity.constructor.name;
 

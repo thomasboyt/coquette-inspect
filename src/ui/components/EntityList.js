@@ -17,8 +17,23 @@ var EntityList = React.createClass({
     };
   },
 
-  handleOpenEntity: function(id) {
-    this.getFlux().actions.entities.subscribeToEntity(id);
+  getInitialState: function() {
+    return {
+      activeUuid: null
+    };
+  },
+
+  handleToggleOpenEntity: function(id) {
+    if (this.state.activeUuid === id) {
+      this.setState({
+        activeUuid: null
+      });
+
+    } else {
+      this.setState({
+        activeUuid: id
+      });
+    }
   },
 
   renderEntityProperties: function(entity) {
@@ -35,9 +50,11 @@ var EntityList = React.createClass({
           );
         }
 
+        var valString = val === null ? 'null' : val.toString();
+
         return (
           <li key={prop}>
-            <code>{prop}</code>: <code>{val}</code>
+            <code>{prop}</code>: <code>{valString}</code>
           </li>
         );
       });
@@ -49,16 +66,21 @@ var EntityList = React.createClass({
     );
   },
 
-  render: function() {
+  renderEntityItem: function(entity) {
+    var isActive = this.state.activeUuid === entity.__inspect_uuid__;
 
-    var items = this.state.entities.map((entity) => (
+    return (
       <li key={entity.__inspect_uuid__}>
-        <a onClick={() => this.handleOpenEntity(entity.__inspect_uuid__)}>
+        <a onClick={() => this.handleToggleOpenEntity(entity.__inspect_uuid__)}>
           {entity.displayName || 'unknown entity'}
         </a>
-        {this.renderEntityProperties(entity)}
+        {isActive && this.renderEntityProperties(entity)}
       </li>
-    ));
+    );
+  },
+
+  render: function() {
+    var items = this.state.entities.map(this.renderEntityItem);
 
     return (
       <ul>

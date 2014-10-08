@@ -3,6 +3,12 @@ var serializeEntity = require('./util/serializeEntity');
 
 var Agent = function(c) {
   this.c = c;
+  this.game = c.entities.game;
+
+  if (!this.game.displayName) {
+    this.game.displayName = '<Game object>';
+  }
+  this.game.__inspect_uuid__ = 'game_object';
 
   this.initDebugLoop();
   this.initDevtoolsMessageListener();
@@ -44,9 +50,11 @@ Agent.prototype.initDevtoolsMessageListener = function() {
 };
 
 Agent.prototype.reportEntities = function() {
-  var entities = this.c.entities.all().map(serializeEntity);
+  var entities = this.c.entities.all().concat(this.game);
 
-  sendMessage('entities', {entities: entities});
+  var serialized = entities.map((entity) => serializeEntity(entity, entities));
+
+  sendMessage('entities', {entities: serialized});
 };
 
 Agent.prototype.pauseExecution = function() {
