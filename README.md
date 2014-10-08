@@ -46,6 +46,6 @@ Without this, the inspector won't be able to find your Coquette instance.
 
 To display your entities with their proper names (i.e. their constructors), one of two of the following need to be true:
 
-If your constructors are defined with the syntax `function Foo() {...}`, the name will be looked up with `entity.constructor.name`. This doesn't work if your function is anonymous, e.g. `var Foo = function() {...}`, because that's just how `function.name` works. See [MDN] (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/name)for more detail on this weird quirk.
+If your constructors are defined with the syntax `function Foo() {...}`, the name will be looked up with `entity.constructor.name`. This doesn't work if your function is anonymous, e.g. `var Foo = function() {...}`, because that's just how `function.name` works. See [MDN] (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/name) for more detail on this weird quirk.
 
 Otherwise, you can set the `displayName` property on your entity. You can either set it inside the constructor (e.g. `this.displayName = 'Person'`), or inside the call to `entities.create` (e.g. `c.entities.create(Person, {displayName: 'Player'})`).
