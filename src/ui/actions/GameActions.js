@@ -2,7 +2,6 @@ var sendMessage = require('../util/sendMessage');
 
 module.exports = {
   pauseGame: function() {
-    // pause game
     sendMessage('pause');
   },
 
@@ -11,11 +10,15 @@ module.exports = {
   },
 
   unpauseGame: function() {
-    // pause game
     sendMessage('unpause');
   },
 
   didUnpauseGame: function() {
     this.dispatch('unpausedGame');
   },
+
+  step: function() {
+    sendMessage('step');
+  }
+
 };

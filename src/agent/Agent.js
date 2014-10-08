@@ -1,6 +1,10 @@
 var sendMessage = require('./util/sendMessage');
 var serializeEntity = require('./util/serializeEntity');
 
+/**
+ * TODO: why is this even a Class? doesn't really do anything particularly ~object-oriented~
+ * not sure what to refactor it into, tho
+ */
 var Agent = function(c) {
   this.c = c;
   this.game = c.entities.game;
@@ -57,22 +61,27 @@ Agent.prototype.reportEntities = function() {
   sendMessage('entities', {entities: serialized});
 };
 
-Agent.prototype.pauseExecution = function() {
-  this.c.ticker.stop();
-  sendMessage('paused');
-};
-
-Agent.prototype.resumeExecution = function() {
-  this.c.ticker.start();
-  sendMessage('unpaused');
-};
-
-Agent.prototype.handleMessage = function(message) {
-  if (message.name === 'pause') {
-    this.pauseExecution();
-  } else if (message.name === 'unpause') {
-    this.resumeExecution();
+Agent.prototype.handlers = {
+  'pause': function() {
+    this.c.ticker.stop();
+    sendMessage('paused');
+  },
+  'unpause': function() {
+    this.c.ticker.start();
+    sendMessage('unpaused');
+  },
+  'step': function() {
+    this.c.ticker.start();  // this schedules a cb for the next requestAnimationFrame()...
+    this.c.ticker.stop();  // ...and this cancels it
   }
+};
+Agent.prototype.handleMessage = function(message) {
+  var handler = this.handlers[message.name];
+  if (!handler) {
+    throw new Error('No handler found for event ' + name);
+  }
+
+  handler.call(this, message.data);
 };
 
 module.exports = Agent;

@@ -27,13 +27,39 @@ var GameState = React.createClass({
     }
   },
 
+  handleStep: function(e) {
+    e.stopPropagation();
+    this.getFlux().actions.game.step();
+  },
+
+  renderPaused: function() {
+    return (
+      <span>
+        <a onClick={this.handleTogglePause} href="#">
+          Play
+        </a> | <a onClick={this.handleStep} href="#">
+          Step
+        </a>
+      </span>
+    );
+  },
+
+  renderPlaying: function() {
+    return (
+      <span>
+        <a onClick={this.handleTogglePause} href="#">
+          Pause
+        </a>
+      </span>
+    );
+  },
+
   render: function() {
+    var statusLabel = this.state.isPaused ? 'Paused' : 'Running';
 
     return (
       <div>
-        {this.state.isPaused ? 'Paused' : 'Running'}
-
-        <a href="#" onClick={this.handleTogglePause}>Toggle</a>
+        {statusLabel} {this.state.isPaused ? this.renderPaused() : this.renderPlaying()}
       </div>
     );
   }

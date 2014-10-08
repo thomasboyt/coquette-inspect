@@ -1,8 +1,3 @@
-/**
- * Someday, this is going to be a wonderful, complex cloning algorithm.
- * Today is not that day.
- */
-
 var cloneValue = function(val, seen) {
 
   /* Functions */
@@ -14,11 +9,13 @@ var cloneValue = function(val, seen) {
   /* Arrays */
   if (Array.isArray(val)) {
     if (seen.has(val)) {
+      // TODO: this isn't really an accurate label, since it can also be a reference to another
+      // entity. Maybe something like [[hidden]] ?
       return '[[Circular reference]]';
     }
 
     seen.set(val, true);
-    return dumbArrayClone(val, seen);
+    return cloneArray(val, seen);
   }
 
   /* Objects */
@@ -35,7 +32,7 @@ var cloneValue = function(val, seen) {
       }
 
       seen.set(val, true);
-      return dumbObjClone(val, seen);
+      return cloneObject(val, seen);
     }
 
     // e.g. [object Foo], hopefully?
@@ -46,7 +43,7 @@ var cloneValue = function(val, seen) {
   return val;
 };
 
-var dumbArrayClone = function(arr, seen) {
+var cloneArray = function(arr, seen) {
   seen = seen || new WeakMap();
 
   var clone = arr.map(function(val) {
@@ -56,7 +53,7 @@ var dumbArrayClone = function(arr, seen) {
   return clone;
 };
 
-var dumbObjClone = function(obj, seen) {
+var cloneObject = function(obj, seen) {
   var clone = {};
   seen = seen || new WeakMap();
 
@@ -73,7 +70,7 @@ var serializeEntity = function(entity, entities) {
     entitiesMap.set(entity, null);
   });
 
-  var clone = dumbObjClone(entity, entitiesMap);
+  var clone = cloneObject(entity, entitiesMap);
 
   clone.displayName = entity.displayName || entity.constructor.name;
 
