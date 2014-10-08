@@ -66,15 +66,33 @@ Agent.prototype.handlers = {
     this.c.ticker.stop();
     sendMessage('paused');
   },
+
   'unpause': function() {
     this.c.ticker.start();
     sendMessage('unpaused');
   },
+
   'step': function() {
     this.c.ticker.start();  // this schedules a cb for the next requestAnimationFrame()...
     this.c.ticker.stop();  // ...and this cancels it
+  },
+
+  'updateProperty': function(data) {
+    console.log(data);
+
+    // find entity by UUID
+    var entity = this.c.entities.all()
+      .filter((entity) => entity.__inspect_uuid__ === data.entityId)[0];
+
+    if (!entity) {
+      throw new Error('No entity found with id ' + data.entityId);
+    }
+
+    // TODO: paths greater than 1 depth
+    entity[data.path] = data.value;
   }
 };
+
 Agent.prototype.handleMessage = function(message) {
   var handler = this.handlers[message.name];
   if (!handler) {

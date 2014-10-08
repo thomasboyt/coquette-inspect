@@ -7,5 +7,9 @@ module.exports = {
 
   subscribeToEntity: function(id) {
     sendMessage('subscribe', {id: id});
+  },
+
+  updateProperty: function(data) {
+    sendMessage('updateProperty', data);
   }
 };
