@@ -9,11 +9,11 @@ Current:
 * List entities currently in the game world
 * Play/pause the game loop
 * Inspect the properties of entities as they update
+* Change the properties of entities
 
 Planned:
 
 * Step through the game loop
-* Change the properties of entities
 
 ## Installing
 
