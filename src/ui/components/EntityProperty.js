@@ -51,15 +51,14 @@ var EntityProperty = React.createClass({
       );
     } else {
       valueDisplay = (
-        <span>
-          <code>{val === null ? 'null' : val.toString()}</code>
-          <button onClick={this.handleOpen}>Edit</button>
+        <span onDoubleClick={this.handleOpen}>
+          {val === null ? 'null' : val.toString()}
         </span>
       );
     }
 
     return (
-      <li key={prop}>
+      <li key={prop} className="entity-property-item">
         <code>{prop}</code>: {valueDisplay}
       </li>
     );

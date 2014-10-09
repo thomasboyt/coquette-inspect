@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var React = require('react');
+var React = require('react/addons');
 var FluxChildMixin = require('fluxxor').FluxChildMixin(React);
 var EntityProperty = require('./EntityProperty');
 
@@ -50,11 +50,22 @@ var Entity = React.createClass({
     var isActive = this.props.isActive;
     var entity = this.props.entity;
 
+    var arrowClass = React.addons.classSet({
+      'glyphicon': true,
+      'list-arrow': true,
+      'glyphicon-chevron-right': !isActive,
+      'glyphicon-chevron-down': isActive
+    });
+
     return (
-      <li>
-        <a onClick={() => this.props.onClickEntity(entity.__inspect_uuid__)}>
-          {entity.displayName || 'unknown entity'}
-        </a>
+      <li className="entity-item">
+        <span onClick={() => this.props.onClickEntity(entity.__inspect_uuid__)}>
+          <span className={arrowClass} />
+          <span className="entity-item-label">
+            {entity.displayName || 'unknown entity'}
+          </span>
+        </span>
+
         {isActive && this.renderEntityProperties(entity)}
       </li>
     );

@@ -12,6 +12,7 @@ module.exports = {
 
   output: {
     path: 'chrome-extension/build/',
+    publicPath: 'build',
     filename: '[name].bundle.js'
   },
 
@@ -30,16 +31,17 @@ module.exports = {
       {
         test: /\.js$/, loader: 'jsx?harmony'
       },
+
       {
         test: /\.less$/,
         loader: "style-loader!css-loader!less-loader"
       },
+
       {
         test: /(?:\.woff$|\.ttf$|\.svg$|\.eot$)/,
         loader: 'file-loader',
         query: {
-          prefix: 'font/',
-          name: 'font/[hash].[ext]'
+          name: '/build/font/[hash].[ext]'
         }
       },
     ]

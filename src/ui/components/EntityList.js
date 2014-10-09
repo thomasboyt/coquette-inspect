@@ -49,7 +49,7 @@ var EntityList = React.createClass({
     });
 
     return (
-      <ul>
+      <ul className="entity-list">
         {items}
       </ul>
     );

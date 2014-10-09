@@ -4,7 +4,8 @@ var React = require('react');
 
 var EntityPropertyInput = React.createClass({
   componentDidMount: function() {
-    this.refs.input.getDOMNode().focus();
+    var input = this.refs.input.getDOMNode();
+    input.select();
   },
 
   handleKeyPress: function(e) {
