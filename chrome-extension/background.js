@@ -1,11 +1,9 @@
 var connections = {};
 
-// Receive message from content script and relay to the devTools page for the
-// current tab
+/*
+ * agent -> content-script.js -> **background.js** -> dev tools
+ */
 chrome.runtime.onMessage.addListener(function(request, sender) {
-  // console.log('incoming message from injected script', request);
-
-  // Messages from content scripts should have sender.tab set
   if (sender.tab) {
     var tabId = sender.tab.id;
     if (tabId in connections) {
@@ -19,6 +17,10 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
   return true;
 });
 
+
+/*
+ * agent <- content-script.js <- **background.js** <- dev tools
+ */
 chrome.runtime.onConnect.addListener(function(port) {
 
   // Listen to messages sent from the DevTools page
