@@ -28,7 +28,7 @@ var Entity = React.createClass({
         if (typeof val === 'object' && val !== null) {
           return (
             <li key={prop}>
-              <code>{prop}</code>: <code>{this.renderEntityProperties(val, path)}</code>
+              <code>{prop}</code>: {this.renderEntityProperties(val, path)}
             </li>
           );
         }

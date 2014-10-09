@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 
+require('../../style/main.less');
+
 var React = require('react');
 var Main = require('./components/Main');
 

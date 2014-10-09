@@ -27,7 +27,21 @@ module.exports = {
 
   module: {
     loaders: [
-      {test: /\.js$/, loader: 'jsx?harmony'}
+      {
+        test: /\.js$/, loader: 'jsx?harmony'
+      },
+      {
+        test: /\.less$/,
+        loader: "style-loader!css-loader!less-loader"
+      },
+      {
+        test: /(?:\.woff$|\.ttf$|\.svg$|\.eot$)/,
+        loader: 'file-loader',
+        query: {
+          prefix: 'font/',
+          name: 'font/[hash].[ext]'
+        }
+      },
     ]
   }
 };
