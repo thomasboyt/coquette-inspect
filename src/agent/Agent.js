@@ -1,5 +1,8 @@
 var sendMessage = require('./util/sendMessage');
 var serializeEntity = require('./util/serializeEntity');
+var deepUpdate = require('../common/deepUpdate');
+
+var GAME_OBJECT_ID = 'game_object';
 
 /**
  * TODO: why is this even a Class? doesn't really do anything particularly ~object-oriented~
@@ -12,7 +15,7 @@ var Agent = function(c) {
   if (!this.game.displayName) {
     this.game.displayName = '<Game object>';
   }
-  this.game.__inspect_uuid__ = 'game_object';
+  this.game.__inspect_uuid__ = GAME_OBJECT_ID;
 
   this.initDebugLoop();
   this.initDevtoolsMessageListener();
@@ -78,28 +81,20 @@ Agent.prototype.handlers = {
   },
 
   'updateProperty': function(data) {
-    console.log(data);
-
     // find entity by UUID
-    var entity = this.c.entities.all()
-      .filter((entity) => entity.__inspect_uuid__ === data.entityId)[0];
+    var entity;
+    if (data.entityId === GAME_OBJECT_ID) {
+      entity = this.game;
+    } else {
+      entity = this.c.entities.all()
+        .filter((entity) => entity.__inspect_uuid__ === data.entityId)[0];
+    }
 
     if (!entity) {
       throw new Error('No entity found with id ' + data.entityId);
     }
 
-    // TODO: paths greater than 1 depth
-    var path = data.path;
-    var obj = entity;
-
-    if (path.length > 1) {
-      obj = path.slice(0, path.length-1).reduce((last, piece) => {
-        return last[piece];
-      }, entity);
-    }
-
-    var key = path[path.length-1];
-    obj[key] = data.value;
+    deepUpdate(entity, data.path, data.value);
   }
 };
 

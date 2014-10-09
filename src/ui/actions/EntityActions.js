@@ -11,5 +11,6 @@ module.exports = {
 
   updateProperty: function(data) {
     sendMessage('updateProperty', data);
+    this.dispatch('didUpdateProperty', data);  // allow optimistic update
   }
 };
