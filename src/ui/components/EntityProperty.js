@@ -40,7 +40,7 @@ var EntityProperty = React.createClass({
   },
 
   render: function() {
-    var prop = this.props.path;
+    var prop = this.props.prop;
     var val = this.props.value;
 
     var valueDisplay;

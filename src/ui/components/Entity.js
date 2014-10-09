@@ -15,21 +15,28 @@ var Entity = React.createClass({
     onClickEntity: React.PropTypes.func
   },
 
-  renderEntityProperties: function(entity) {
-    var items = Object.keys(entity)
+  renderEntityProperties: function(obj, lastPath) {
+    lastPath = lastPath || [];
+
+    var items = Object.keys(obj)
       .filter((prop) => prop !== 'displayName' && prop !== '__inspect_uuid__')
       .map((prop) => {
-        var val = entity[prop];
+        var val = obj[prop];
+
+        var path = lastPath.concat(prop);
 
         if (typeof val === 'object' && val !== null) {
           return (
             <li key={prop}>
-              <code>{prop}</code>: <code>{this.renderEntityProperties(val)}</code>
+              <code>{prop}</code>: <code>{this.renderEntityProperties(val, path)}</code>
             </li>
           );
         }
 
-        return <EntityProperty entity={entity} path={prop} value={val} key={prop} />;
+        return (
+          <EntityProperty entity={this.props.entity}
+            prop={prop} path={path} value={val} key={prop} />
+        );
       });
 
     return (

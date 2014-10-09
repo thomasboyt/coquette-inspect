@@ -89,7 +89,17 @@ Agent.prototype.handlers = {
     }
 
     // TODO: paths greater than 1 depth
-    entity[data.path] = data.value;
+    var path = data.path;
+    var obj = entity;
+
+    if (path.length > 1) {
+      obj = path.slice(0, path.length-1).reduce((last, piece) => {
+        return last[piece];
+      }, entity);
+    }
+
+    var key = path[path.length-1];
+    obj[key] = data.value;
   }
 };
 
