@@ -1,5 +1,4 @@
-[![Stories in Ready](https://badge.waffle.io/thomasboyt/coquette-inspect.png?label=ready&title=Ready)](https://waffle.io/thomasboyt/coquette-inspect)
-# coquette-inspect
+# coquette-inspect [![Stories in Ready](https://badge.waffle.io/thomasboyt/coquette-inspect.png?label=ready&title=Ready)](https://waffle.io/thomasboyt/coquette-inspect)
 
 A Chrome DevTools extension for inspecting [Coquette.js](http://coquette.maryrosecook.com/) games.
 
