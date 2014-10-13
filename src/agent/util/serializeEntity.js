@@ -13,7 +13,7 @@ var cloneValue = function(val, seen, blacklist) {
     }
 
     seen.set(val, true);
-    return cloneArray(val, seen);
+    return cloneArray(val, seen, blacklist);
   }
 
   /* Objects */
@@ -33,7 +33,7 @@ var cloneValue = function(val, seen, blacklist) {
     // needs to be way more fine-grained
     if (val.toString() === '[object Object]') {
       seen.set(val, true);
-      return cloneObject(val, seen);
+      return cloneObject(val, seen, blacklist);
     }
 
     // e.g. [[object Foo]], hopefully?
