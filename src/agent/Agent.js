@@ -22,17 +22,17 @@ var Agent = function(c) {
 };
 
 Agent.prototype.initDebugLoop = function() {
-  var debugLoop = function() {
+  var debugLoop = () => {
     this.reportEntities();
 
     // Ensure that this isn't re-enqueued on the same frame, or the runner gets stuck in an endless
     // loop.
     // TODO: setTimeout() seems like a non-optimal way to do this, could end up missing frames
     // or hurting perf? :C
-    setTimeout(function() {
+    setTimeout(() => {
       this.c.runner.add(undefined, debugLoop);
-    }.bind(this));
-  }.bind(this);
+    });
+  };
 
   this.c.runner.add(undefined, debugLoop);
 };
@@ -61,7 +61,7 @@ Agent.prototype.reportEntities = function() {
 
   var serialized = entities.map((entity) => serializeEntity(entity, entities));
 
-  sendMessage('entities', {entities: serialized});
+  sendMessage('tick', {entities: serialized});
 };
 
 Agent.prototype.handlers = {

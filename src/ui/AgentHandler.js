@@ -9,8 +9,9 @@ var AgentHandler = function(flux) {
 AgentHandler.prototype.handleMessage = function(msg) {
   if (msg.name === 'connected') {
     // document.write('connected');
-  } else if (msg.name === 'entities') {
+  } else if (msg.name === 'tick') {
     this.flux.actions.entities.didGetEntities(msg.data.entities);
+    this.flux.actions.game.didTick();
   } else if (msg.name === 'paused') {
     this.flux.actions.game.didPauseGame();
   } else if (msg.name === 'unpaused') {

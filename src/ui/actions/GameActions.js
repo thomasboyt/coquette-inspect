@@ -19,6 +19,10 @@ module.exports = {
 
   step: function() {
     sendMessage('step');
+  },
+
+  didTick: function() {
+    this.dispatch('ticked');
   }
 
 };

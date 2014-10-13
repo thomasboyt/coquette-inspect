@@ -13,7 +13,8 @@ var GameState = React.createClass({
   getStateFromFlux: function() {
     var store = this.getFlux().store('GameStore');
     return {
-      isPaused: store.isPaused
+      isPaused: store.isPaused,
+      fps: store.fps
     };
   },
 
@@ -59,7 +60,8 @@ var GameState = React.createClass({
 
     return (
       <div>
-        {statusLabel} {this.state.isPaused ? this.renderPaused() : this.renderPlaying()}
+        {statusLabel} {this.state.isPaused ? this.renderPaused() : this.renderPlaying()}<br/>
+        FPS: {this.state.fps}
       </div>
     );
   }
