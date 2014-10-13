@@ -4,6 +4,14 @@ var React = require('react');
 var FluxChildMixin = require('fluxxor').FluxChildMixin(React);
 var EntityPropertyInput = require('./EntityPropertyInput');
 
+var isUneditable = function(value) {
+  return (typeof value === 'string' && (
+          value === '[[Coquette namespace]]' ||
+          value === '[[Circular reference]]' ||
+          value.match(/^\[\[Entity .*\]\]$/) ||
+          value.match(/^\[\[object \s[^\s]*\]\]$/)));
+};
+
 var EntityProperty = React.createClass({
   mixins: [
     FluxChildMixin
@@ -16,6 +24,10 @@ var EntityProperty = React.createClass({
   },
 
   handleOpen: function() {
+    if (isUneditable(this.props.value)) {
+      return;
+    }
+
     this.setState({
       isOpen: true
     });

@@ -36,8 +36,8 @@ var cloneValue = function(val, seen, blacklist) {
       return cloneObject(val, seen);
     }
 
-    // e.g. [object Foo], hopefully?
-    return val.toString();
+    // e.g. [[object Foo]], hopefully?
+    return '[' + val.toString() + ']';
   }
 
   /* Primitives */
