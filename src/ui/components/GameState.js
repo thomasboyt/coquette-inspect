@@ -58,10 +58,12 @@ var GameState = React.createClass({
   render: function() {
     var statusLabel = this.state.isPaused ? 'Paused' : 'Running';
 
+    var fpsClass = this.state.fps < 59 ? 'fps-warning' : null;
+
     return (
       <div>
         {statusLabel} {this.state.isPaused ? this.renderPaused() : this.renderPlaying()}<br/>
-        FPS: {this.state.fps}
+        <span className={fpsClass}>FPS: {this.state.fps}</span>
       </div>
     );
   }
