@@ -1,4 +1,4 @@
-var cloneValue = function(val, seen) {
+var cloneValue = function(val, seen, blacklist) {
 
   /* Functions */
   if (typeof val === 'function') {
@@ -9,8 +9,6 @@ var cloneValue = function(val, seen) {
   /* Arrays */
   if (Array.isArray(val)) {
     if (seen.has(val)) {
-      // TODO: this isn't really an accurate label, since it can also be a reference to another
-      // entity. Maybe something like [[hidden]] ?
       return '[[Circular reference]]';
     }
 
@@ -20,17 +18,20 @@ var cloneValue = function(val, seen) {
 
   /* Objects */
   if (typeof val === 'object' && val !== null) {
+    // don't serialize the Coquette object, which is often stored on entities
+    if (val === window.__coquette__) {
+      return '[[Coquette namespace]]';
+    }
+    if (seen.has(val)) {
+      return '[[Circular reference]]';
+    }
+    if (blacklist.has(val)) {
+      return '[[Entity ' + val.displayName + ']]';
+    }
+
     // TODO: this is a hack to not serialize crazy & non-transportable things like DOM Nodes,
     // needs to be way more fine-grained
     if (val.toString() === '[object Object]') {
-      // don't serialize the Coquette object, which is often stored on entities
-      if (val === window.__coquette__) {
-        return '[[Coquette namespace]]';
-      }
-      if (seen.has(val)) {
-        return '[[Circular reference]]';
-      }
-
       seen.set(val, true);
       return cloneObject(val, seen);
     }
@@ -43,22 +44,19 @@ var cloneValue = function(val, seen) {
   return val;
 };
 
-var cloneArray = function(arr, seen) {
-  seen = seen || new WeakMap();
-
+var cloneArray = function(arr, seen, blacklist) {
   var clone = arr.map(function(val) {
-    return cloneValue(val, seen);
+    return cloneValue(val, seen, blacklist);
   });
 
   return clone;
 };
 
-var cloneObject = function(obj, seen) {
+var cloneObject = function(obj, seen, blacklist) {
   var clone = {};
-  seen = seen || new WeakMap();
 
   for (var key in obj) {
-    clone[key] = cloneValue(obj[key], seen);
+    clone[key] = cloneValue(obj[key], seen, blacklist);
   }
 
   return clone;
@@ -66,11 +64,14 @@ var cloneObject = function(obj, seen) {
 
 var serializeEntity = function(entity, entities) {
   var entitiesMap = new WeakMap();
+  // Chrome doesn't support WeakMap(iterable) yet :(
   entities.forEach((entity) => {
     entitiesMap.set(entity, null);
   });
 
-  var clone = cloneObject(entity, entitiesMap);
+  var seenMap = new WeakMap();
+
+  var clone = cloneObject(entity, seenMap, entitiesMap);
 
   clone.displayName = entity.displayName || entity.constructor.name;
 
