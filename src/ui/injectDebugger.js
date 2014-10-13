@@ -2,14 +2,20 @@
 var injectDebugger = function() {
   /* jshint evil: true */
 
-  var xhr = new XMLHttpRequest();
-  // yes, this is a synchronous HTTP request. welcome to the magic world of extension development,
-  // where everything is just SLIGHTLY off from regular ol' javascripting
-  xhr.open('GET', chrome.extension.getURL('/build/agent.bundle.js'), false);
-  xhr.send();
+  var injectedGlobal = 'window.__coquette_inspect_agent_injected__';
 
-  var script = xhr.responseText;
-  chrome.devtools.inspectedWindow.eval(script);
+  chrome.devtools.inspectedWindow.eval(injectedGlobal, function(result) {
+    if (!result) {
+      // script hasn't been injected yet
+
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', chrome.extension.getURL('/build/agent.bundle.js'), false);
+      xhr.send();
+      var script = xhr.responseText;
+
+      chrome.devtools.inspectedWindow.eval(script);
+    }
+  });
 };
 
 module.exports = injectDebugger;

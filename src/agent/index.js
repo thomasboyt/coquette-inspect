@@ -1,4 +1,4 @@
-console.log('connected');
+window.__coquette_inspect_agent_injected__ = true;
 
 var Agent = require('./Agent');
 var patchEntities = require('./patchEntities');
