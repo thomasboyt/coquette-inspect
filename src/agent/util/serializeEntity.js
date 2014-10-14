@@ -29,15 +29,12 @@ var cloneValue = function(val, seen, blacklist) {
       return '[[Entity ' + val.displayName + ']]';
     }
 
-    // TODO: this is a hack to not serialize crazy & non-transportable things like DOM Nodes,
-    // needs to be way more fine-grained
-    if (val.toString() === '[object Object]') {
-      seen.set(val, true);
-      return cloneObject(val, seen, blacklist);
+    if (val instanceof HTMLElement) {
+      return '[' + val.toString() + ']';
     }
 
-    // e.g. [[object Foo]], hopefully?
-    return '[' + val.toString() + ']';
+    seen.set(val, true);
+    return cloneObject(val, seen, blacklist);
   }
 
   /* Primitives */
