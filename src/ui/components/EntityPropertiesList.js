@@ -44,7 +44,10 @@ var EntityPropertiesList = React.createClass({
 
   propTypes: {
     entity: React.PropTypes.object.isRequired,
-    obj: React.PropTypes.object,
+    obj: React.PropTypes.oneOfType([
+      React.PropTypes.object,
+      React.PropTypes.array
+    ]),
     lastPath: React.PropTypes.array
   },
 
