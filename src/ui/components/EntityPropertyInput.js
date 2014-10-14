@@ -15,7 +15,13 @@ var EntityPropertyInput = React.createClass({
   },
 
   render: function() {
-    var input = <input ref="input" onKeyPress={this.handleKeyPress} />;
+    var val = this.props.val;
+
+    if (typeof val === 'string') {
+      val = '"' + val + '"';
+    }
+
+    var input = <input defaultValue={val} ref="input" onKeyPress={this.handleKeyPress} />;
     this.transferPropsTo(input);
     return input;
   }

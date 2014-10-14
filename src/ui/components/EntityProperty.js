@@ -87,7 +87,7 @@ var EntityProperty = React.createClass({
     var valueDisplay;
     if (this.state.isOpen) {
       valueDisplay = (
-        <EntityPropertyInput defaultValue={this.props.value} onBlur={this.handleClose} />
+        <EntityPropertyInput val={this.props.value} onBlur={this.handleClose} />
       );
     } else {
       valueDisplay = this.renderValue();

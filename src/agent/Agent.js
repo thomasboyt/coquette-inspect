@@ -110,6 +110,8 @@ Agent.prototype.handlers = {
   },
 
   updateProperty: function(data) {
+    /* jshint evil: true */
+
     // find entity by UUID
     var entity;
     if (data.entityId === GAME_OBJECT_ID) {
@@ -123,7 +125,15 @@ Agent.prototype.handlers = {
       throw new Error('No entity found with id ' + data.entityId);
     }
 
-    deepUpdate(entity, data.path, data.value);
+    var val;
+    try {
+      val = eval(data.value);
+    } catch(e) {
+      // Don't update anything if the passed expression is invalid
+      return;
+    }
+
+    deepUpdate(entity, data.path, val);
   },
 
   subscribeToEntity: function(data) {
