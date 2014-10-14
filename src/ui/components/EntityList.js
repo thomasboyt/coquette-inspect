@@ -21,7 +21,7 @@ var EntityList = React.createClass({
   },
 
   handleToggleOpenEntity: function(id) {
-    if (this.props.isActive) {
+    if (id === this.state.subscribedId) {
       this.getFlux().actions.entities.unsubscribeFromEntity(id);
     } else {
       this.getFlux().actions.entities.subscribeToEntity(id);
@@ -39,9 +39,11 @@ var EntityList = React.createClass({
     });
 
     return (
-      <ul className="entity-list">
-        {items}
-      </ul>
+      <div className="entity-list-container">
+        <ul className="entity-list">
+          {items}
+        </ul>
+      </div>
     );
   }
 });

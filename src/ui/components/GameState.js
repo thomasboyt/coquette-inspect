@@ -61,7 +61,7 @@ var GameState = React.createClass({
     var fpsClass = this.state.fps < 59 ? 'fps-warning' : null;
 
     return (
-      <div>
+      <div className="game-state">
         {statusLabel} {this.state.isPaused ? this.renderPaused() : this.renderPlaying()}<br/>
         <span className={fpsClass}>FPS: {this.state.fps}</span>
       </div>

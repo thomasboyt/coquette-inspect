@@ -94,22 +94,22 @@ Agent.prototype.serializeSubscribedEntity = function(id, entities) {
 };
 
 Agent.prototype.handlers = {
-  'pause': function() {
+  pause: function() {
     this.c.ticker.stop();
     sendMessage('paused');
   },
 
-  'unpause': function() {
+  unpause: function() {
     this.c.ticker.start();
     sendMessage('unpaused');
   },
 
-  'step': function() {
+  step: function() {
     this.c.ticker.start();  // this schedules a cb for the next requestAnimationFrame()...
     this.c.ticker.stop();  // ...and this cancels it
   },
 
-  'updateProperty': function(data) {
+  updateProperty: function(data) {
     // find entity by UUID
     var entity;
     if (data.entityId === GAME_OBJECT_ID) {
@@ -126,7 +126,7 @@ Agent.prototype.handlers = {
     deepUpdate(entity, data.path, data.value);
   },
 
-  'subscribeToEntity': function(data) {
+  subscribeToEntity: function(data) {
     this.subscribedEntityId = data.entityId;
   },
 

@@ -30,7 +30,7 @@ var cloneValue = function(val, seen, blacklist) {
     }
 
     if (val instanceof HTMLElement) {
-      return '[' + val.toString() + ']';
+      return '[' + val.toString() + ']';  // looks like [[object HTMLElement]]
     }
 
     seen.set(val, true);

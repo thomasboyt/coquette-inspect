@@ -1,58 +1,9 @@
 @import "~bootstrap/less/bootstrap";
 @icon-font-path: '~bootstrap/fonts/';
+@import "entity-list";
 
 body {
   padding: 0px 20px;
-}
-
-ul {
-  padding-left: 17px;
-}
-
-.console-formatted-number, .console-formatted-boolean {
-  color: rgb(28, 0, 207);
-}
-
-.console-formatted-string {
-  color: rgb(196, 26, 22);
-}
-
-.console-formatted-null {
-  color: rgb(128, 128, 128);
-}
-
-ul.entity-list {
-  cursor: default;
-
-  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-
-  code {
-    background: none;
-    font-size: 100%;
-    padding: 0;
-    color: rgb(136, 19, 145);
-  }
-
-  li {
-    list-style-type: none;
-    position: relative;
-
-    .list-arrow {
-      position: absolute;
-      top: 5px;
-      left: -15px;
-      font-size: 10px;
-    }
-
-    input {
-      &:focus {
-        outline: 1px #aaa solid;
-        outline-offset: 1px;
-      }
-      padding: 0px;
-      border: 0;
-    }
-  }
 }
 
 .fps-warning {

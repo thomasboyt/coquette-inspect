@@ -11,9 +11,7 @@ var Main = React.createClass({
   render: function() {
     return (
       <div>
-        <h3>Game State</h3>
         <GameState />
-        <h3>Entities</h3>
         <EntityList />
       </div>
     );
