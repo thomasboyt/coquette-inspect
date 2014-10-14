@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var React = require('react');
+var React = require('react/addons');
 var FluxChildMixin = require('fluxxor').FluxChildMixin(React);
 var EntityPropertyInput = require('./EntityPropertyInput');
 
@@ -9,7 +9,7 @@ var isUneditable = function(value) {
           value === '[[Coquette namespace]]' ||
           value === '[[Circular reference]]' ||
           value.match(/^\[\[Entity .*\]\]$/) ||
-          value.match(/^\[\[object \s[^\s]*\]\]$/)));
+          value.match(/^\[\[object [^\s]*\]\]$/)));
 };
 
 var EntityProperty = React.createClass({
@@ -51,22 +51,46 @@ var EntityProperty = React.createClass({
     });
   },
 
-  render: function() {
-    var prop = this.props.prop;
+  getClassFor: function(val) {
+    if (isUneditable(val)) {
+      return;
+    }
+
+    var className;
+    if (val === null) {
+      className = 'null';
+    } else {
+      className = typeof val;
+    }
+
+    return 'console-formatted-' + className;
+  },
+
+  renderValue: function() {
     var val = this.props.value;
 
-    var valueDisplay;
+    var className = this.getClassFor(val);
+    var isString = className === 'console-formatted-string';
 
+    return (
+      <span className={className} onDoubleClick={this.handleOpen}>
+        {isString && '"'}
+        {val === null ? 'null' : val.toString()}
+        {isString && '"'}
+      </span>
+    );
+  },
+
+  render: function() {
+    var prop = this.props.prop;
+
+    var valueDisplay;
     if (this.state.isOpen) {
       valueDisplay = (
-        <EntityPropertyInput defaultValue={val} onBlur={this.handleClose} />
+        <EntityPropertyInput defaultValue={this.props.value} onBlur={this.handleClose} />
       );
     } else {
-      valueDisplay = (
-        <span onDoubleClick={this.handleOpen}>
-          {val === null ? 'null' : val.toString()}
-        </span>
-      );
+      valueDisplay = this.renderValue();
     }
 
     return (

@@ -5,6 +5,7 @@ var FluxChildMixin = require('fluxxor').FluxChildMixin(React);
 var EntityProperty = require('./EntityProperty');
 var ListArrow = require('./ListArrow');
 
+
 // TODO: This is currently inlined in this file because of the circular dependency between
 // EntityObjectProperty and EntityPropertiesList :(
 var EntityObjectProperty = React.createClass({
@@ -36,6 +37,7 @@ var EntityObjectProperty = React.createClass({
     );
   }
 });
+
 
 var EntityPropertiesList = React.createClass({
   mixins: [
