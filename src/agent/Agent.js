@@ -1,7 +1,5 @@
 var sendMessage = require('./util/sendMessage');
 var serializeEntity = require('./util/serializeEntity');
-
-window.serializeEntity = serializeEntity;
 var deepUpdate = require('../common/deepUpdate');
 
 var GAME_OBJECT_ID = 'game_object';
@@ -94,6 +92,12 @@ Agent.prototype.serializeSubscribedEntity = function(id, entities) {
 };
 
 Agent.prototype.handlers = {
+
+  // Broadcast when the dev tools are opened
+  connect: function() {
+    sendMessage('connected');
+  },
+
   pause: function() {
     this.c.ticker.stop();
     sendMessage('paused');
@@ -105,8 +109,8 @@ Agent.prototype.handlers = {
   },
 
   step: function() {
-    this.c.ticker.start();  // this schedules a cb for the next requestAnimationFrame()...
-    this.c.ticker.stop();  // ...and this cancels it
+    this.c.ticker.start();  // this sets a cb for the requestAnimationFrame() loop..
+    this.c.ticker.stop();   // ...and this unsets it, so that only one frame is run
   },
 
   updateProperty: function(data) {

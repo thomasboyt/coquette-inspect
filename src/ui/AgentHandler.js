@@ -8,7 +8,7 @@ var AgentHandler = function(flux) {
 
 AgentHandler.prototype.handleMessage = function(msg) {
   if (msg.name === 'connected') {
-    // document.write('connected');
+    this.flux.actions.didConnect();
 
   } else if (msg.name === 'tick') {
     this.flux.actions.entities.didGetEntities({

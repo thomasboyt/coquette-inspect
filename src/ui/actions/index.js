@@ -3,5 +3,9 @@ var GameActions = require('./GameActions');
 
 module.exports = {
   entities: EntityActions,
-  game: GameActions
+  game: GameActions,
+
+  didConnect: function() {
+    this.dispatch('connected');
+  }
 };

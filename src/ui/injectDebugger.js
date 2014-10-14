@@ -1,5 +1,5 @@
 // thx https://github.com/emberjs/ember-inspector/blob/master/app/adapters/chrome.js
-var injectDebugger = function() {
+var injectDebugger = function(callback) {
   /* jshint evil: true */
 
   var injectedGlobal = 'window.__coquette_inspect_agent_injected__';
@@ -13,7 +13,7 @@ var injectDebugger = function() {
       xhr.send();
       var script = xhr.responseText;
 
-      chrome.devtools.inspectedWindow.eval(script);
+      chrome.devtools.inspectedWindow.eval(script, callback);
     }
   });
 };
