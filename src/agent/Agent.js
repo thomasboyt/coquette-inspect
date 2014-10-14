@@ -1,5 +1,7 @@
 var sendMessage = require('./util/sendMessage');
 var serializeEntity = require('./util/serializeEntity');
+
+window.serializeEntity = serializeEntity;
 var deepUpdate = require('../common/deepUpdate');
 
 var GAME_OBJECT_ID = 'game_object';
@@ -11,6 +13,8 @@ var GAME_OBJECT_ID = 'game_object';
 var Agent = function(c) {
   this.c = c;
   this.game = c.entities.game;
+
+  this.subscribedEntityId = null;
 
   if (!this.game.displayName) {
     this.game.displayName = '<Game object>';
@@ -59,9 +63,34 @@ Agent.prototype.initDevtoolsMessageListener = function() {
 Agent.prototype.reportEntities = function() {
   var entities = this.c.entities.all().concat(this.game);
 
-  var serialized = entities.map((entity) => serializeEntity(entity, entities));
+  var entitiesList = entities.map((entity) => {
+    return {
+      displayName: entity.displayName || entity.constructor.name,
+      entityId: entity.__inspect_uuid__
+    };
+  });
 
-  sendMessage('tick', {entities: serialized});
+  var id = this.subscribedEntityId;
+
+  sendMessage('tick', {
+    entities: entitiesList,
+    subscribedEntity: this.serializeSubscribedEntity(id, entities)
+  });
+};
+
+Agent.prototype.serializeSubscribedEntity = function(id, entities) {
+  if (this.subscribedEntityId === null) {
+    return;
+  }
+
+  var entity = entities.filter((entity) => id === entity.__inspect_uuid__)[0];
+
+  if (!entity) {
+    this.subscribedEntityId = null;
+    return;
+  }
+
+  return serializeEntity(entity, entities);
 };
 
 Agent.prototype.handlers = {
@@ -95,6 +124,14 @@ Agent.prototype.handlers = {
     }
 
     deepUpdate(entity, data.path, data.value);
+  },
+
+  'subscribeToEntity': function(data) {
+    this.subscribedEntityId = data.entityId;
+  },
+
+  unsubscribeFromEntity: function(/*data*/) {
+    this.subscribedEntityId = null;
   }
 };
 

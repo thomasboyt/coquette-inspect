@@ -10,10 +10,21 @@ var EntityStore = Fluxxor.createStore({
 
   initialize: function() {
     this.entities = [];
+    this.subscribedDetail = null;
+    this.subscribedId = null;
   },
 
-  onDidGetEntities: function(entities) {
-    this.entities = entities;
+  onDidGetEntities: function(data) {
+    this.entities = data.entities;
+
+    if (data.subscribedEntity) {
+      this.subscribedId = data.subscribedEntity.__inspect_uuid__;
+      this.subscribedDetail = data.subscribedEntity;
+    } else {
+      this.subscribedId = null;
+      this.subscribedDetail = null;
+    }
+
     this.emit('change');
   },
 

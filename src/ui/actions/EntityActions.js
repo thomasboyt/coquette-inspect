@@ -1,12 +1,16 @@
 var sendMessage = require('../util/sendMessage');
 
 module.exports = {
-  didGetEntities: function(entities) {
-    this.dispatch('didGetEntities', entities);
+  didGetEntities: function(entities, subscribedDetail) {
+    this.dispatch('didGetEntities', entities, subscribedDetail);
   },
 
   subscribeToEntity: function(id) {
-    sendMessage('subscribe', {id: id});
+    sendMessage('subscribeToEntity', {entityId: id});
+  },
+
+  unsubscribeFromEntity: function(id) {
+    sendMessage('unsubscribeFromEntity', {entityId: id});
   },
 
   updateProperty: function(data) {

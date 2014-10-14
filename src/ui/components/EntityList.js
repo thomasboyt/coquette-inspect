@@ -14,37 +14,27 @@ var EntityList = React.createClass({
   getStateFromFlux: function() {
     var store = this.getFlux().store('EntityStore');
     return {
-      entities: store.entities
-    };
-  },
-
-  getInitialState: function() {
-    return {
-      activeUuid: null
+      entities: store.entities,
+      subscribedId: store.subscribedId,
+      subscribedDetail: store.subscribedDetail
     };
   },
 
   handleToggleOpenEntity: function(id) {
-    if (this.state.activeUuid === id) {
-      this.setState({
-        activeUuid: null
-      });
-
+    if (this.props.isActive) {
+      this.getFlux().actions.entities.unsubscribeFromEntity(id);
     } else {
-      this.setState({
-        activeUuid: id
-      });
+      this.getFlux().actions.entities.subscribeToEntity(id);
     }
   },
 
   render: function() {
     var items = this.state.entities.map((entity) => {
-      var isActive = this.state.activeUuid === entity.__inspect_uuid__;
+      var isActive = entity.entityId === this.state.subscribedId;
 
       return (
-        <Entity entity={entity} isActive={isActive}
-          onClickEntity={this.handleToggleOpenEntity}
-          key={entity.__inspect_uuid__} />
+        <Entity entity={entity} isActive={isActive} onClickEntity={this.handleToggleOpenEntity}
+          subscribedDetail={this.state.subscribedDetail} key={entity.entityId} />
       );
     });
 
