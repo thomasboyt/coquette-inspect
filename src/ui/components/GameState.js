@@ -36,11 +36,12 @@ var GameState = React.createClass({
   renderPaused: function() {
     return (
       <span>
-        <a onClick={this.handleTogglePause} href="#">
-          Play
-        </a> | <a onClick={this.handleStep} href="#">
-          Step
-        </a>
+        <button onClick={this.handleTogglePause} className="activated">
+          <span className="glyphicon glyphicon-play" />
+        </button>
+        <button onClick={this.handleStep}>
+          <span className="glyphicon glyphicon-step-forward" />
+        </button>
       </span>
     );
   },
@@ -48,22 +49,23 @@ var GameState = React.createClass({
   renderPlaying: function() {
     return (
       <span>
-        <a onClick={this.handleTogglePause} href="#">
-          Pause
-        </a>
+        <button onClick={this.handleTogglePause}>
+          <span className="glyphicon glyphicon-pause" />
+        </button>
+        <button disabled>
+          <span className="glyphicon glyphicon-step-forward" />
+        </button>
       </span>
     );
   },
 
   render: function() {
-    var statusLabel = this.state.isPaused ? 'Paused' : 'Running';
-
-    var fpsClass = this.state.fps < 59 ? 'fps-warning' : null;
+    var fpsClass = this.state.fps < 59 ? 'fps fps-warning' : 'fps';
 
     return (
-      <div className="game-state">
-        {statusLabel} {this.state.isPaused ? this.renderPaused() : this.renderPlaying()}<br/>
-        <span className={fpsClass}>FPS: {this.state.fps}</span>
+      <div className="controls">
+        <span className={fpsClass}>{this.state.fps} FPS</span>&nbsp;
+        {this.state.isPaused ? this.renderPaused() : this.renderPlaying()}
       </div>
     );
   }

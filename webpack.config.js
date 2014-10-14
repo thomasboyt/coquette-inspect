@@ -6,6 +6,8 @@ module.exports = {
     agent: './src/agent/index.js',
     vendor: [
       'react',
+      'lodash',
+      'uuid',
       'fluxxor'
     ]
   },

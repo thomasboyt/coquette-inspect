@@ -10,9 +10,20 @@ var Main = React.createClass({
 
   render: function() {
     return (
-      <div>
-        <GameState />
-        <EntityList />
+      <div className="main-container">
+        <div className="panel panel-default">
+
+          <div className="panel-heading">
+            <GameState />
+            <h3 className="panel-title">
+              Entities
+            </h3>
+          </div>
+          <div className="panel-body">
+            <EntityList />
+          </div>
+
+        </div>
       </div>
     );
   }

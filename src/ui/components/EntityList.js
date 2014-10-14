@@ -39,11 +39,9 @@ var EntityList = React.createClass({
     });
 
     return (
-      <div className="entity-list-container">
-        <ul className="entity-list">
-          {items}
-        </ul>
-      </div>
+      <ul className="entity-list">
+        {items}
+      </ul>
     );
   }
 });

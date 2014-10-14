@@ -2,10 +2,53 @@
 @icon-font-path: '~bootstrap/fonts/';
 @import "entity-list";
 
-body {
-  padding: 0px 20px;
-}
-
 .fps-warning {
   color: red;
+}
+
+html, body, #container {
+  height: 100%;
+}
+
+.main-container {
+  height: 100%;
+}
+
+.panel {
+  min-height: 100%;
+  border-radius: 0;
+  box-shadow: 0;
+  margin-bottom: 0;
+}
+
+.panel-heading {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  position: relative;
+}
+
+.controls {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  bottom: 0;
+
+  button {
+    height: 100%;
+    width: 40px;
+    font-size: 16px;
+
+    &:disabled {
+      color: #aaa;
+    }
+
+    &.activated {
+      color: rgb(66, 129, 235);
+    }
+  }
+
+  .fps {
+    display: inline-block;
+    padding-right: 20px;
+  }
 }
