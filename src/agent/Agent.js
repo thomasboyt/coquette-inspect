@@ -160,6 +160,7 @@ Agent.prototype.handlers = {
   }
 };
 
+
 Agent.prototype.attachSelectClickHandler = function() {
   if (this._findTargetCb) {
     // already enabled
@@ -183,14 +184,19 @@ Agent.prototype.attachSelectClickHandler = function() {
   };
 
   this.canvas.addEventListener('click', this._findTargetCb);
+  this.canvas.style.cursor = 'pointer';
+
   sendMessage('enabledSelectMode');
 };
 
 Agent.prototype.removeSelectClickHandler = function() {
   this.canvas.removeEventListener('click', this._findTargetCb);
   delete this._findTargetCb;
+  this.canvas.style.cursor = 'default';
+
   sendMessage('disabledSelectMode');
 };
+
 
 Agent.prototype.handleMessage = function(message) {
   var handler = this.handlers[message.name];
