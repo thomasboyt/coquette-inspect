@@ -14,6 +14,7 @@ var GameState = React.createClass({
     var store = this.getFlux().store('GameStore');
     return {
       isPaused: store.isPaused,
+      isSelecting: store.isSelecting,
       fps: store.fps
     };
   },
@@ -28,6 +29,16 @@ var GameState = React.createClass({
     }
   },
 
+  handleToggleSelectEntity: function(e) {
+    e.stopPropagation();
+
+    if (!this.state.isSelecting) {
+      this.getFlux().actions.game.enableSelectMode();
+    } else {
+      this.getFlux().actions.game.disableSelectMode();
+    }
+  },
+
   handleStep: function(e) {
     e.stopPropagation();
     this.getFlux().actions.game.step();
@@ -36,10 +47,10 @@ var GameState = React.createClass({
   renderPaused: function() {
     return (
       <span>
-        <button onClick={this.handleTogglePause} className="activated">
+        <button onClick={this.handleTogglePause} className="activated" title="Play">
           <span className="glyphicon glyphicon-play" />
         </button>
-        <button onClick={this.handleStep}>
+        <button onClick={this.handleStep} title="Step forward">
           <span className="glyphicon glyphicon-step-forward" />
         </button>
       </span>
@@ -47,12 +58,15 @@ var GameState = React.createClass({
   },
 
   renderPlaying: function() {
+    var fpsClass = this.state.fps < 59 ? 'fps fps-warning' : 'fps';
+
     return (
       <span>
-        <button onClick={this.handleTogglePause}>
+        <span className={fpsClass}>{this.state.fps} FPS</span>&nbsp;
+        <button onClick={this.handleTogglePause} title="Pause">
           <span className="glyphicon glyphicon-pause" />
         </button>
-        <button disabled>
+        <button disabled title="Step forward">
           <span className="glyphicon glyphicon-step-forward" />
         </button>
       </span>
@@ -60,12 +74,15 @@ var GameState = React.createClass({
   },
 
   render: function() {
-    var fpsClass = this.state.fps < 59 ? 'fps fps-warning' : 'fps';
+    var selectClass = this.state.isSelecting ? 'activated' : '';
 
     return (
       <div className="controls">
-        <span className={fpsClass}>{this.state.fps} FPS</span>&nbsp;
         {this.state.isPaused ? this.renderPaused() : this.renderPlaying()}
+
+        <button onClick={this.handleToggleSelectEntity} className={selectClass} title="Click an entity to inspect it.">
+          <span className="glyphicon glyphicon-zoom-in" />
+        </button>
       </div>
     );
   }

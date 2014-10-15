@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var sendMessage = require('./util/sendMessage');
 var serializeEntity = require('./util/serializeEntity');
 var deepUpdate = require('../common/deepUpdate');
@@ -11,6 +12,8 @@ var GAME_OBJECT_ID = 'game_object';
 var Agent = function(c) {
   this.c = c;
   this.game = c.entities.game;
+  this.Coquette = c.constructor;
+  this.canvas = c.renderer._ctx.canvas;
 
   this.subscribedEntityId = null;
 
@@ -146,13 +149,54 @@ Agent.prototype.handlers = {
 
   unsubscribeFromEntity: function(/*data*/) {
     this.subscribedEntityId = null;
+  },
+
+  enableSelectMode: function() {
+    this.attachSelectClickHandler();
+  },
+
+  disableSelectMode: function() {
+    this.removeSelectClickHandler();
   }
+};
+
+Agent.prototype.attachSelectClickHandler = function() {
+  if (this._findTargetCb) {
+    // already enabled
+    return;
+  }
+
+  this._findTargetCb = (e) => {
+    e.stopPropagation();
+
+    var x = e.offsetX - e.target.offsetLeft;
+    var y = e.offsetY - e.target.offsetTop;
+
+    var matching = _.find(this.c.entities.all(),
+                          (obj) => this.Coquette.Collider.Maths.pointInsideObj({x: x, y: y}, obj));
+
+    if (matching) {
+      this.subscribedEntityId = matching.__inspect_uuid__;
+    }
+
+    this.removeSelectClickHandler();
+  };
+
+  this.canvas.addEventListener('click', this._findTargetCb);
+  sendMessage('enabledSelectMode');
+};
+
+Agent.prototype.removeSelectClickHandler = function() {
+  this.canvas.removeEventListener('click', this._findTargetCb);
+  delete this._findTargetCb;
+  sendMessage('disabledSelectMode');
 };
 
 Agent.prototype.handleMessage = function(message) {
   var handler = this.handlers[message.name];
   if (!handler) {
-    throw new Error('No handler found for event ' + name);
+    console.warn('No handler found for event ' + name);
+    return;
   }
 
   handler.call(this, message.data);

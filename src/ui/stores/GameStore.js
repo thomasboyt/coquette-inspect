@@ -26,7 +26,9 @@ var GameStore = Fluxxor.createStore({
   actions: {
     'pausedGame': 'onPausedGame',
     'unpausedGame': 'onUnpausedGame',
-    'ticked': 'onTicked'
+    'ticked': 'onTicked',
+    'enabledSelectMode': 'onEnabledSelectMode',
+    'disabledSelectMode': 'onDisabledSelectMode'
   },
 
   initialize: function() {
@@ -55,6 +57,16 @@ var GameStore = Fluxxor.createStore({
 
     this._lastTick = cur;
 
+    this.emit('change');
+  },
+
+  onEnabledSelectMode: function() {
+    this.isSelecting = true;
+    this.emit('change');
+  },
+
+  onDisabledSelectMode: function() {
+    this.isSelecting = false;
     this.emit('change');
   }
 });

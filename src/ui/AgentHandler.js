@@ -5,33 +5,37 @@ var AgentHandler = function(flux) {
   this.flux = flux;
 
   port.onMessage.addListener((msg) => { this.handleMessage(msg); });
+  
+  this.handlers = {
+    connected: () => this.flux.actions.didConnect(),
+
+    reloaded: () => injectDebugger(),
+
+    tick: (data) => {
+      this.flux.actions.entities.didGetEntities({
+        entities: data.entities,
+        subscribedEntity: data.subscribedEntity
+      });
+
+      this.flux.actions.game.didTick();
+    },
+
+    paused: () => this.flux.actions.game.didPauseGame(),
+    unpaused: () => this.flux.actions.game.didUnpauseGame(),
+
+    enabledSelectMode: () => this.flux.actions.game.didEnableSelectMode(),
+    disabledSelectMode: () => this.flux.actions.game.didDisableSelectMode()
+  };
 };
 
-AgentHandler.prototype.handleMessage = function(msg) {
-  if (msg.name === 'connected') {
-    this.flux.actions.didConnect();
-
-  } else if (msg.name === 'reloaded') {
-    injectDebugger();
-
-  } else if (msg.name === 'tick') {
-    this.flux.actions.entities.didGetEntities({
-      entities: msg.data.entities,
-      subscribedEntity: msg.data.subscribedEntity
-    });
-
-    this.flux.actions.game.didTick();
-
-  } else if (msg.name === 'paused') {
-    this.flux.actions.game.didPauseGame();
-
-  } else if (msg.name === 'unpaused') {
-    this.flux.actions.game.didUnpauseGame();
-
-  } else {
-    // console.log('unknown event type', msg.name);
+AgentHandler.prototype.handleMessage = function(message) {
+  var handler = this.handlers[message.name];
+  if (!handler) {
+    console.warn('No handler found for event ' + name);
+    return;
   }
-};
 
+  handler(message.data);
+};
 
 module.exports = AgentHandler;

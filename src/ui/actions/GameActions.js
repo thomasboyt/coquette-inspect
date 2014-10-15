@@ -23,6 +23,21 @@ module.exports = {
 
   didTick: function() {
     this.dispatch('ticked');
-  }
+  },
 
+  enableSelectMode: function() {
+    sendMessage('enableSelectMode');
+  },
+
+  didEnableSelectMode: function() {
+    this.dispatch('enabledSelectMode');
+  },
+
+  disableSelectMode: function() {
+    sendMessage('disableSelectMode');
+  },
+
+  didDisableSelectMode: function() {
+    this.dispatch('disabledSelectMode');
+  }
 };

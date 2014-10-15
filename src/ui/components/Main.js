@@ -4,7 +4,7 @@ var React = require('react');
 var FluxMixin = require('fluxxor').FluxMixin(React);
 var StoreWatchMixin = require('fluxxor').StoreWatchMixin;
 var EntityList = require('./EntityList');
-var GameState = require('./GameState');
+var GameControls = require('./GameControls');
 
 var Main = React.createClass({
   mixins: [
@@ -25,7 +25,7 @@ var Main = React.createClass({
       <div className="panel panel-default">
 
         <div className="panel-heading">
-          <GameState />
+          <GameControls />
           <h3 className="panel-title">
             Entities
           </h3>
