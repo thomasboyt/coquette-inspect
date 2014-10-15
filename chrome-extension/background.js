@@ -38,11 +38,20 @@ chrome.runtime.onConnect.addListener(function(port) {
       return;
     }
 
-    // Otherwise, broadcast to panel
+    // Otherwise, broadcast to agent
     chrome.tabs.sendMessage(request.tabId, {
       name: request.name,
       data: request.data
     });
   });
 
+});
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
+  if (tabId in connections && changeInfo.status === 'complete') {
+    // TODO: reload connection to page somehow...?
+    connections[tabId].postMessage({
+      name: 'reloaded'
+    });
+  }
 });

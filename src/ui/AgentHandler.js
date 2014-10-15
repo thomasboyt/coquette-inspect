@@ -1,4 +1,5 @@
 var port = require('./port');
+var injectDebugger = require('./injectDebugger');
 
 var AgentHandler = function(flux) {
   this.flux = flux;
@@ -9,6 +10,9 @@ var AgentHandler = function(flux) {
 AgentHandler.prototype.handleMessage = function(msg) {
   if (msg.name === 'connected') {
     this.flux.actions.didConnect();
+
+  } else if (msg.name === 'reloaded') {
+    injectDebugger();
 
   } else if (msg.name === 'tick') {
     this.flux.actions.entities.didGetEntities({

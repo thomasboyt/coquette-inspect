@@ -1,5 +1,7 @@
+var sendMessage = require('./util/sendMessage');
+
 // thx https://github.com/emberjs/ember-inspector/blob/master/app/adapters/chrome.js
-var injectDebugger = function(callback) {
+var injectDebugger = function() {
   /* jshint evil: true */
 
   var injectedGlobal = 'window.__coquette_inspect_agent_injected__';
@@ -13,7 +15,9 @@ var injectDebugger = function(callback) {
       xhr.send();
       var script = xhr.responseText;
 
-      chrome.devtools.inspectedWindow.eval(script, callback);
+      chrome.devtools.inspectedWindow.eval(script, function() {
+        sendMessage('connect');
+      });
     }
   });
 };

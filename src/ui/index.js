@@ -7,7 +7,6 @@ var Main = require('./components/Main');
 
 var injectDebugger = require('./injectDebugger');
 var AgentHandler = require('./AgentHandler');
-var sendMessage = require('./util/sendMessage');
 
 var Flux = require('fluxxor').Flux;
 var actions = require('./actions');
@@ -17,9 +16,7 @@ var flux = new Flux(stores, actions);
 
 var agentHandler = new AgentHandler(flux);
 
-injectDebugger(function() {
-  sendMessage('connect');
-});
+injectDebugger();
 
 window.addEventListener('load', function() {
   React.renderComponent(<Main flux={flux}/>, document.getElementById('container'));
