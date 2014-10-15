@@ -23,10 +23,6 @@ module.exports = {
 
   didTick: function() {
     this.dispatch('ticked');
-  },
-
-  didConnect: function() {
-    this.dispatch('connected');
   }
 
 };
