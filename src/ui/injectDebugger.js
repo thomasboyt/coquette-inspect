@@ -18,6 +18,9 @@ var injectDebugger = function() {
       chrome.devtools.inspectedWindow.eval(script, function() {
         sendMessage('connect');
       });
+    } else {
+      // we're already injected, so just connect
+      sendMessage('connect');
     }
   });
 };
