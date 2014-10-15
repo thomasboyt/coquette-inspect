@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "Coquette Inspect",
-  "description": "A debugging tool for games made using coquette.js",
+  "description": "A DevTools extension for inspecting games made with the Coquette framework",
   "version": "0.0.1",
 
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
