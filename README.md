@@ -5,7 +5,7 @@ A Chrome DevTools extension for inspecting [Coquette.js](http://coquette.maryros
 ![](https://cloud.githubusercontent.com/assets/579628/4639937/32eca436-5417-11e4-8f2b-422e33b11d9e.gif)
 
 <p align="center">
-  <em>The inspector in action in the <a href="#">spinning-shapes demo</a>.</em>
+  <em>The inspector in action in the <a href="http://coquette.maryrosecook.com/demos/spinning-shapes/">spinning shapes demo</a>.</em>
 </p>
 
 ## Features
