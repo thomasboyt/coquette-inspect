@@ -26,7 +26,7 @@ cd coquette-inspect/
 npm install && ./node_modules/.bin/webpack
 ```
 
-Then load the `chrome-extension` folder as an unpacked extension ([see thisguide](https://developer.chrome.com/extensions/getstarted#unpacked)).
+Then load the `chrome-extension` folder as an unpacked extension ([see this guide](https://developer.chrome.com/extensions/getstarted#unpacked)).
 
 If it worked, you should see a "Coquette" tab in your developer tools when you next open them.
 
