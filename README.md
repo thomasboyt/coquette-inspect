@@ -14,15 +14,17 @@ A Chrome DevTools extension for inspecting [Coquette.js](http://coquette.maryros
 
 ## Installing
 
-To build:
+To install:
 
 ```
-npm install && webpack
+git clone git@github.com:thomasboyt/coquette-inspect.git
+cd coquette-inspect/
+npm install && ./node_modules/.bin/webpack
 ```
 
-Then load the `chrome-extension` folder as an unpacked extension ([guide](https://developer.chrome.com/extensions/getstarted#unpacked)).
+Then load the `chrome-extension` folder as an unpacked extension ([see thisguide](https://developer.chrome.com/extensions/getstarted#unpacked)).
 
-If it worked, you should see a "Coquette" tab in your developer tools when you open them.
+If it worked, you should see a "Coquette" tab in your developer tools when you next open them.
 
 ## Usage
 
