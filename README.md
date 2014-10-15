@@ -6,15 +6,10 @@ A Chrome DevTools extension for inspecting [Coquette.js](http://coquette.maryros
 
 ## Features
 
-Current:
-
 * List entities currently in the game world
-* Play/pause the game loop
 * Inspect the properties of entities as they update
 * Change the properties of entities
-
-Planned:
-
+* Play/pause the game loop
 * Step through the game loop
 
 ## Installing
