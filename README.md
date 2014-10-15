@@ -2,7 +2,8 @@
 
 A Chrome DevTools extension for inspecting [Coquette.js](http://coquette.maryrosecook.com/) games.
 
-![](https://cloud.githubusercontent.com/assets/579628/4639937/32eca436-5417-11e4-8f2b-422e33b11d9e.gif)
+![](https://cloud.githubusercontent.com/assets/579628/4639937/32eca436-5417-11e4-8f2b-422e33b11d9e.gif)<br/>
+*(the inspector in action in the [spinning-shapes](http://coquette.maryrosecook.com/demos/spinning-shapes/) demo)*
 
 ## Features
 
