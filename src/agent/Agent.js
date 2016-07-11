@@ -15,13 +15,16 @@ var Agent = function(c) {
   this.Coquette = c.constructor;
   this.canvas = c.renderer._ctx.canvas;
 
+  // Agent state
   this.subscribedEntityId = null;
 
+  // Register a displayName and ID on the game object
   if (!this.game.displayName) {
     this.game.displayName = '<Game object>';
   }
   this.game.__inspect_uuid__ = GAME_OBJECT_ID;
 
+  // Kick off debug loop and message handler
   this.initDebugLoop();
   this.initDevtoolsMessageListener();
 };
@@ -170,11 +173,15 @@ Agent.prototype.attachSelectClickHandler = function() {
   this._findTargetCb = (e) => {
     e.stopPropagation();
 
-    var x = e.offsetX - e.target.offsetLeft;
-    var y = e.offsetY - e.target.offsetTop;
+    var x = e.pageX - e.target.offsetLeft;
+    var y = e.pageY - e.target.offsetTop;
 
-    var matching = _.find(this.c.entities.all(),
-                          (obj) => this.Coquette.Collider.Maths.pointInsideObj({x: x, y: y}, obj));
+    var matching = _.find(this.c.entities.all(), (obj) => {
+      if (!obj.center || !obj.size) {
+        return false;
+      }
+      return this.Coquette.Collider.Maths.pointInsideObj({x, y}, obj);
+    });
 
     if (matching) {
       this.subscribedEntityId = matching.__inspect_uuid__;
