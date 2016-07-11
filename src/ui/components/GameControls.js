@@ -1,12 +1,10 @@
-/** @jsx React.DOM */
-
 var React = require('react');
-var FluxChildMixin = require('fluxxor').FluxChildMixin(React);
+var FluxMixin = require('fluxxor').FluxMixin(React);
 var StoreWatchMixin = require('fluxxor').StoreWatchMixin;
 
 var GameState = React.createClass({
   mixins: [
-    FluxChildMixin,
+    FluxMixin,
     StoreWatchMixin('GameStore')
   ],
 

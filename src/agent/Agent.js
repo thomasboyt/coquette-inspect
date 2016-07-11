@@ -204,7 +204,6 @@ Agent.prototype.removeSelectClickHandler = function() {
   sendMessage('disabledSelectMode');
 };
 
-
 Agent.prototype.handleMessage = function(message) {
   var handler = this.handlers[message.name];
   if (!handler) {

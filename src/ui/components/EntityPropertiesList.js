@@ -1,7 +1,5 @@
-/** @jsx React.DOM */
-
-var React = require('react/addons');
-var FluxChildMixin = require('fluxxor').FluxChildMixin(React);
+var React = require('react');
+var FluxMixin = require('fluxxor').FluxMixin(React);
 var EntityProperty = require('./EntityProperty');
 var ListArrow = require('./ListArrow');
 
@@ -41,7 +39,7 @@ var EntityObjectProperty = React.createClass({
 
 var EntityPropertiesList = React.createClass({
   mixins: [
-    FluxChildMixin
+    FluxMixin
   ],
 
   propTypes: {

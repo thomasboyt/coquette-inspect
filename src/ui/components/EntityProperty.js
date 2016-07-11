@@ -1,7 +1,5 @@
-/** @jsx React.DOM */
-
-var React = require('react/addons');
-var FluxChildMixin = require('fluxxor').FluxChildMixin(React);
+var React = require('react');
+var FluxMixin = require('fluxxor').FluxMixin(React);
 var EntityPropertyInput = require('./EntityPropertyInput');
 
 var isUneditable = function(value) {
@@ -14,7 +12,7 @@ var isUneditable = function(value) {
 
 var EntityProperty = React.createClass({
   mixins: [
-    FluxChildMixin
+    FluxMixin
   ],
 
   getInitialState: function() {

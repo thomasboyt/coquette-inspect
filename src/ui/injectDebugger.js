@@ -15,7 +15,11 @@ var injectDebugger = function() {
       xhr.send();
       var script = xhr.responseText;
 
-      chrome.devtools.inspectedWindow.eval(script, function() {
+      chrome.devtools.inspectedWindow.eval(script, function(result, err) {
+        if (err) {
+          console.error(err.value);
+        }
+
         sendMessage('connect');
       });
     } else {

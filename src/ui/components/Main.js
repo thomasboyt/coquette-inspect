@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react');
 var FluxMixin = require('fluxxor').FluxMixin(React);
 var StoreWatchMixin = require('fluxxor').StoreWatchMixin;
@@ -50,16 +48,16 @@ var Main = React.createClass({
               If there's a coquette application on the page, the most common reason this occurs is
               because its Coquette instance hasn't been exposed on the main window object as
               <code>window.__coquette__</code>. To fix, update your game's constructor, for example:
-
-              <pre>
-                {/* this is the worst. */}
-                {'var Game = function() {\n'}
-                {'  this.c = new Coquette(this, "canvas", 500, 150, "#000");\n'}
-                {'  window.__coquette__ = this.c;\n'}
-                {'  // ...\n'}
-                {'};\n'}
-              </pre>
             </p>
+
+            <pre>
+              {/* this is the worst. */}
+              {'var Game = function() {\n'}
+              {'  this.c = new Coquette(this, "canvas", 500, 150, "#000");\n'}
+              {'  window.__coquette__ = this.c;\n'}
+              {'  // ...\n'}
+              {'};\n'}
+            </pre>
           </div>
         </div>
       </div>

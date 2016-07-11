@@ -5,7 +5,7 @@ var AgentHandler = function(flux) {
   this.flux = flux;
 
   port.onMessage.addListener((msg) => { this.handleMessage(msg); });
-  
+
   this.handlers = {
     connected: () => this.flux.actions.didConnect(),
 
@@ -31,7 +31,7 @@ var AgentHandler = function(flux) {
 AgentHandler.prototype.handleMessage = function(message) {
   var handler = this.handlers[message.name];
   if (!handler) {
-    console.warn('No handler found for event ' + name);
+    console.warn('No handler found for event ' + message.name);
     return;
   }
 

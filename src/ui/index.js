@@ -1,8 +1,7 @@
-/** @jsx React.DOM */
-
 require('../../style/main.less');
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var Main = require('./components/Main');
 
 var injectDebugger = require('./injectDebugger');
@@ -19,5 +18,5 @@ var agentHandler = new AgentHandler(flux);
 injectDebugger();
 
 window.addEventListener('load', function() {
-  React.renderComponent(<Main flux={flux}/>, document.getElementById('container'));
+  ReactDOM.render(<Main flux={flux}/>, document.getElementById('container'));
 });
