@@ -2,13 +2,13 @@ var React = require('react');
 
 var EntityPropertyInput = React.createClass({
   componentDidMount: function() {
-    var input = this.refs.input.getDOMNode();
+    var input = this.refs.input;
     input.select();
   },
 
   handleKeyPress: function(e) {
     if (e.charCode === 13) {  // enter
-      this.refs.input.getDOMNode().blur();
+      this.refs.input.blur();
     }
   },
 
@@ -19,9 +19,9 @@ var EntityPropertyInput = React.createClass({
       val = '"' + val + '"';
     }
 
-    var input = <input defaultValue={val} ref="input" onKeyPress={this.handleKeyPress} />;
-    this.transferPropsTo(input);
-    return input;
+    return (
+      <input onBlur={this.props.onBlur} defaultValue={val} ref="input" onKeyPress={this.handleKeyPress} />
+    );
   }
 });
 
